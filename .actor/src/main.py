@@ -101,33 +101,21 @@ def create_crawler_run_config(
         magic=input.magic_mode,
         screenshot=input.save_screenshots,
         css_selector=cast(str, input.css_selector),
-
-        # ❤️ DEFAULTS (but overridable)
-        wait_for=input.wait_for or "css:body",
-        wait_until=input.wait_until or "networkidle",
-        navigation_timeout=input.navigation_timeout or 30000,
-        extract_images=input.extract_images if input.extract_images is not None else False,
-        compute_image_dimensions=input.compute_image_dimensions if input.compute_image_dimensions is not None else False,
-        headless=input.headless if input.headless is not None else False,
-
-        # Proxy (yours stays unchanged)
         proxy_config=ProxyConfig(
             server=proxy_info.url,
             username=proxy_info.username,
             password=proxy_info.password,
-        ) if proxy_info else None,
-
-        # More defaults that can also be overridden in input
-        user_agent=input.user_agent or (
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/124.0.0.0 Safari/537.36"
-        ),
-        browser_args=input.browser_args or [
-            "--disable-blink-features=AutomationControlled"
-        ],
+        )
+        if proxy_info
+        else None,
     )
-    
+
+    if input.js_code:
+        config.js_code = input.js_code
+
+    if input.wait_for:
+        config.wait_for = input.wait_for
+
     if isinstance(input.extraction_strategy, LLMExtraction):
         config.extraction_strategy = LLMExtractionStrategy(
             provider=input.extraction_strategy.provider,
