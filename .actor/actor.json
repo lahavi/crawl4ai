@@ -7,7 +7,7 @@
     "buildTag": "latest",
     "input": {
         "title": "Crawl4AI settings",
-        "description": "See https://docs.crawl4ai.com/ for explanation",
+        "description": "See https://revamped.ai/ for explanation",
         "type": "object",
         "schemaVersion": 1,
         "properties": {
@@ -16,7 +16,7 @@
                 "type": "array",
                 "description": "URLs to start with",
                 "prefill": [
-                    {"url": "http://crawl4ai.com"}
+                    {"url": "https://revamped.ai"}
                 ],
                 "editor": "requestListSources"
             },
